@@ -1,8 +1,10 @@
+import widgets from "../widgets";
+
 import { formatApiCall } from "utils/proxy/api-helpers";
 import { httpProxy } from "utils/proxy/http";
 import getServiceWidget from "utils/config/service-helpers";
 import createLogger from "utils/logger";
-import widgets from "../widgets";
+
 
 const MYINVESTOR_AUTH_URL = "https://app.myinvestor.es/ms-keycloak/api/v1/auth/token";
 
@@ -42,7 +44,7 @@ export default async function myinvestorProxyHandler(req, res) {
   const url = new URL(formatApiCall(widgets[widget.type].api, { endpoint, ...widget }));
   const params = { method: "GET", headers: {} };
 
-  let [status, contentType, data] = await httpProxy(url, params);
+  let [status, , data] = await httpProxy(url, params);
   if (status === 403) {
     [status, data] = await login(widget);
 
@@ -59,9 +61,9 @@ export default async function myinvestorProxyHandler(req, res) {
       return res.status(401).end(data);
     }
 
-    params.headers["Authorization"] = `Bearer ${accessToken}`;
+    params.headers.Authorization = `Bearer ${accessToken}`;
 
-    [status, contentType, data] = await httpProxy(url, params);
+    [status, , data] = await httpProxy(url, params);
   }
 
   if (status !== 200) {
