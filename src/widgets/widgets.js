@@ -62,6 +62,7 @@ import miniflux from "./miniflux/widget";
 import mikrotik from "./mikrotik/widget";
 import mjpeg from "./mjpeg/widget";
 import moonraker from "./moonraker/widget";
+import myinvestor from "./myinvestor/widget"
 import mylar from "./mylar/widget";
 import myspeed from "./myspeed/widget";
 import navidrome from "./navidrome/widget";
@@ -197,6 +198,7 @@ const widgets = {
   mikrotik,
   mjpeg,
   moonraker,
+  myinvestor,
   mylar,
   myspeed,
   navidrome,
